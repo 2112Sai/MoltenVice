@@ -197,7 +197,6 @@
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#inquiry">Order</a></li>
     <li><a href="#faq">FAQ</a></li>
-    <li><a href="shop.html">Shop</li>
   </ul>
   <div class="nav-right">
     <a class="nav-ig" href="https://instagram.com/moltenvice.studio" target="_blank" rel="noopener">
@@ -383,7 +382,7 @@
       <div class="ccol reveal">
         <h3>Reach Out</h3>
         <p>The fastest way to reach us is via Instagram DM &mdash; we&rsquo;re always active there. You can also email us and we&rsquo;ll get back to you within 48 hours.</p>
-        <p style="margin-top:.9rem">&#128231; <a href="mailto:hello@moltenvice.studio">hello@moltenvice.studio</a><span style="font-size:.7rem;color:var(--silver);display:block;margin-top:.3rem">(email coming soon &mdash; DM us on Instagram for now)</span></p>
+        <p style="margin-top:.9rem">&#128231; <a href="/cdn-cgi/l/email-protection#f49c9198989bb4999b9880919a829d9791da878081909d9b"><span class="__cf_email__" data-cfemail="3d55585151527d5052514958534b545e58134e4948595452">[email&#160;protected]</span></a><span style="font-size:.7rem;color:var(--silver);display:block;margin-top:.3rem">(email coming soon &mdash; DM us on Instagram for now)</span></p>
         <a class="igbtn" href="https://instagram.com/moltenvice.studio" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".5" fill="currentColor" stroke="none"/></svg>
           DM @moltenvice.studio
@@ -405,7 +404,7 @@
   <a href="https://instagram.com/moltenvice.studio" target="_blank" rel="noopener">@moltenvice.studio</a>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // NAV
   var nav=document.getElementById('nav');
   window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>60);},{passive:true});
@@ -448,39 +447,93 @@
     });
   });
 
-  // FORM
-  var form=document.getElementById('iform'),fsuc=document.getElementById('fsuccess');
+  // SANITIZATION & VALIDATION
+  // strip() removes HTML tags, null bytes, and trims whitespace
+  // prevents XSS if form data is ever echoed back into the DOM
+  function strip(str) {
+    return String(str)
+      .replace(/\0/g, '')                          // null bytes
+      .replace(/<[^>]*>/g, '')                     // HTML tags
+      .replace(/javascript\s*:/gi, '')             // javascript: URIs
+      .replace(/on\w+\s*=/gi, '')                  // inline event handlers
+      .trim();
+  }
+  function validEmail(v) { return /^[^\s@<>'"]{1,64}@[^\s@<>'"]{1,253}\.[a-zA-Z]{2,}$/.test(v); }
+  function validName(v)  { return v.length >= 2 && v.length <= 100; }
+  function validMsg(v)   { return v.length >= 10 && v.length <= 2000; }
+  function validIG(v)    { return v === '' || /^@?[a-zA-Z0-9._]{1,60}$/.test(v); }
+
   function se(id,s){var el=document.getElementById(id);if(el)el.classList.toggle('show',s);}
   function mf(id,bad){var el=document.getElementById(id);if(el)el.classList.toggle('err',bad);}
+
+  var form=document.getElementById('iform'),fsuc=document.getElementById('fsuccess');
 
   form.addEventListener('submit',function(e){
     e.preventDefault();
     var ok=true;
-    var name=document.getElementById('fn'),nOk=name.value.trim().length>=2;
-    se('en',!nOk);mf('fn',!nOk);if(!nOk)ok=false;
-    var email=document.getElementById('fe'),eOk=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
-    se('ee',!eOk);mf('fe',!eOk);if(!eOk)ok=false;
-    var budget=document.getElementById('fb'),bOk=budget.value!=='';
-    se('eb',!bOk);mf('fb',!bOk);if(!bOk)ok=false;
-    var pOk=!!document.querySelector('input[name="placement"]:checked');
-    se('ep',!pOk);if(!pOk)ok=false;
-    var teeth=document.getElementById('ft'),tOk=teeth.value!=='';
-    se('ett',!tOk);mf('ft',!tOk);if(!tOk)ok=false;
-    var style=document.getElementById('fs'),sOk=style.value!=='';
-    se('es',!sOk);mf('fs',!sOk);if(!sOk)ok=false;
-    var msg=document.getElementById('fm'),mOk=msg.value.trim().length>=10;
-    se('em',!mOk);mf('fm',!mOk);if(!mOk)ok=false;
+
+    // Sanitize then validate each field
+    var nameRaw  = strip(document.getElementById('fn').value);
+    var emailRaw = strip(document.getElementById('fe').value);
+    var igRaw    = strip(document.getElementById('fig').value);
+    var msgRaw   = strip(document.getElementById('fm').value);
+    var budgetEl = document.getElementById('fb');
+    var teethEl  = document.getElementById('ft');
+    var styleEl  = document.getElementById('fs');
+
+    // Allowed values for selects — reject anything not in the list
+    var validBudgets = ['u500','500-1k','1k-2.5k','2.5k-5k','5k+'];
+    var validTeeth   = ['2','4','6','8','10','Full set (top or bottom)','Full mouth'];
+    var validStyles  = ['solid','openface','icy','inlay','unsure'];
+
+    var nOk = validName(nameRaw);
+    se('en',!nOk); mf('fn',!nOk); if(!nOk) ok=false;
+
+    var eOk = validEmail(emailRaw);
+    se('ee',!eOk); mf('fe',!eOk); if(!eOk) ok=false;
+
+    var igOk = validIG(igRaw);
+    // IG is optional so only show error if they typed something invalid
+    if(igRaw !== '' && !igOk) { ok=false; }
+
+    var bOk = validBudgets.indexOf(budgetEl.value) !== -1;
+    se('eb',!bOk); mf('fb',!bOk); if(!bOk) ok=false;
+
+    var pOk = !!document.querySelector('input[name="placement"]:checked');
+    se('ep',!pOk); if(!pOk) ok=false;
+
+    var tOk = validTeeth.indexOf(teethEl.value) !== -1;
+    se('ett',!tOk); mf('ft',!tOk); if(!tOk) ok=false;
+
+    var sOk = validStyles.indexOf(styleEl.value) !== -1;
+    se('es',!sOk); mf('fs',!sOk); if(!sOk) ok=false;
+
+    var mOk = validMsg(msgRaw);
+    se('em',!mOk); mf('fm',!mOk); if(!mOk) ok=false;
+
     var agree=document.getElementById('fa');
-    se('ea',!agree.checked);if(!agree.checked)ok=false;
-    if(ok){form.style.display='none';fsuc.style.display='block';fsuc.scrollIntoView({behavior:'smooth',block:'center'});}
-    else{var fe=form.querySelector('.err,.em.show');if(fe)fe.scrollIntoView({behavior:'smooth',block:'center'});}
+    se('ea',!agree.checked); if(!agree.checked) ok=false;
+
+    if(ok){
+      // Write sanitized values back before submitting (or sending via fetch)
+      document.getElementById('fn').value  = nameRaw;
+      document.getElementById('fe').value  = emailRaw;
+      document.getElementById('fig').value = igRaw;
+      document.getElementById('fm').value  = msgRaw;
+      form.style.display='none';
+      fsuc.style.display='block';
+      fsuc.scrollIntoView({behavior:'smooth',block:'center'});
+    } else {
+      var fe=form.querySelector('.err,.em.show');
+      if(fe) fe.scrollIntoView({behavior:'smooth',block:'center'});
+    }
   });
 
   form.querySelectorAll('input,select,textarea').forEach(function(el){
     el.addEventListener('input',function(){
       el.classList.remove('err');
       var errEl=document.getElementById(el.id.replace(/^f/,'e'));
-      if(errEl)errEl.classList.remove('show');
+      if(errEl) errEl.classList.remove('show');
     });
   });
 </script>
