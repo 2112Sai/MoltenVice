@@ -28,13 +28,15 @@
     #nav.scrolled{background:rgba(255,255,255,.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
     .nav-logo{font-family:var(--fd);font-size:1.5rem;letter-spacing:.12em;color:var(--ink);flex-shrink:0}
     .nav-links{display:none;gap:2.2rem;list-style:none;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
-    .nav-links a{color:var(--silver);transition:color .2s}.nav-links a:hover{color:var(--ink)}
+    .nav-links a{color:var(--steel);transition:color .2s}.nav-links a:hover{color:var(--ink)}
     .nav-right{display:flex;align-items:center;gap:1rem}
     .nav-ig{display:flex;align-items:center;gap:.4rem;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);border:1px solid var(--border);padding:.35rem .85rem;transition:background .2s,color .2s,border-color .2s}
     .nav-ig:hover{background:var(--ink);color:var(--white);border-color:var(--ink)}
     .nav-ig svg{width:13px;height:13px}
-    .nav-shop{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--ink);padding:.38rem 1rem;transition:background .2s}
-    .nav-shop:hover{background:var(--steel)}
+    .nav-shop{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--white);background:var(--ink);border:1px solid var(--ink);padding:.38rem 1rem;transition:background .2s,border-color .2s}
+    .nav-shop:hover{background:var(--hi);border-color:var(--hi)}
+    /* Nav always has a solid bg so logo + links are readable on load */
+    #nav{background:rgba(255,255,255,.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
     .burger{display:flex;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px}
     .burger span{display:block;width:22px;height:1px;background:var(--ink);transition:.3s}
     #mmenu{display:none;position:fixed;inset:0;z-index:998;background:var(--white);flex-direction:column;align-items:center;justify-content:center;gap:2.2rem}
@@ -219,13 +221,11 @@
 </div>
 
 <section id="hero">
-  <video id="hvid" autoplay muted loop playsinline><source src="YOUR_VIDEO.mp4" type="video/mp4"/></video>
-  <div id="hph">
-    <div style="text-align:center;opacity:.22;pointer-events:none">
-      <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="#1a1917" stroke-width=".6"><polygon points="5,3 19,12 5,21"/></svg>
-      <p style="font-family:'DM Sans',sans-serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#1a1917;margin-top:.5rem">Replace with video</p>
-    </div>
-  </div>
+  <!-- Free stock: Pexels video 3045163 – molten gold pour, CC0 -->
+  <video id="hvid" autoplay muted loop playsinline poster="https://images.pexels.com/videos/3045163/pictures/preview-0.jpg">
+    <source src="https://videos.pexels.com/video-files/3045163/3045163-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+  </video>
+  <div id="hph" style="display:none"></div>
   <div class="hero-ov"></div>
   <div class="hero-c">
     <p class="hero-eye">Los Angeles &middot; Est. 2024</p>
@@ -246,13 +246,13 @@
     <p class="slabel reveal">Our Work</p>
     <h2 class="stitle reveal">The Collection</h2>
     <div class="ggrid">
-      <div class="gi reveal"><div class="gph"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9a9890" stroke-width=".8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Solid Gold</span></div><span class="gtag">Signature</span><div class="gcap"><h3>Full Solid Set</h3><p>10K / 14K / 18K Gold</p></div></div>
-      <div class="gi reveal"><div class="gph"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9a9890" stroke-width=".8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Open Face</span></div><span class="gtag">Classic</span><div class="gcap"><h3>Open Face Grillz</h3><p>Custom Window Cut</p></div></div>
-      <div class="gi reveal"><div class="gph"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9a9890" stroke-width=".8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Icy Set</span></div><span class="gtag">Diamond</span><div class="gcap"><h3>VVS Icy Set</h3><p>VS1 / VVS Moissanite</p></div></div>
-      <div class="gi reveal"><div class="gph"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9a9890" stroke-width=".8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Inlay Art</span></div><span class="gtag">Bespoke</span><div class="gcap"><h3>Custom Inlay</h3><p>Hand-Set Stones</p></div></div>
-      <div class="gi reveal"><div class="gph"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9a9890" stroke-width=".8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Rose Gold</span></div><span class="gtag">Limited</span><div class="gcap"><h3>Rose Gold Bottom</h3><p>14K Rose &middot; 6 Teeth</p></div></div>
-      <div class="gi reveal"><div class="gph"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9a9890" stroke-width=".8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>Fangs</span></div><span class="gtag">Statement</span><div class="gcap"><h3>Fang Set</h3><p>Pointed Canine Design</p></div></div>
-      <div class="gi reveal"><div class="gph"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#9a9890" stroke-width=".8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21,15 16,10 5,21"/></svg><span>White Gold</span></div><span class="gtag">Premium</span><div class="gcap"><h3>White Gold Icy</h3><p>10K White + Diamond Cut</p></div></div>
+      <div class="gi reveal"><img src="gallery1.jpg" alt="Custom Inlay Engraved Set" loading="lazy" style="width:100%;height:100%;object-fit:cover"/><span class="gtag">Signature</span><div class="gcap"><h3>Floral Engraved Inlay</h3><p>Silver &middot; Custom Mold</p></div></div>
+      <div class="gi reveal"><img src="gallery2.jpg" alt="Full Solid Chrome Hearts Set" loading="lazy" style="width:100%;height:100%;object-fit:cover"/><span class="gtag">Solid</span><div class="gcap"><h3>Full Solid Set</h3><p>Top &amp; Bottom</p></div></div>
+      <div class="gi reveal"><img src="gallery3.jpg" alt="Sculptural Open Face with Sapphire" loading="lazy" style="width:100%;height:100%;object-fit:cover"/><span class="gtag">Bespoke</span><div class="gcap"><h3>Sculptural Open Face</h3><p>Silver &middot; Sapphire Stone</p></div></div>
+      <div class="gi reveal"><img src="gallery4.jpg" alt="Opal and Ruby Custom Inlay" loading="lazy" style="width:100%;height:100%;object-fit:cover"/><span class="gtag">Inlay</span><div class="gcap"><h3>Opal &amp; Ruby Inlay</h3><p>Full Mouth &middot; Custom Set</p></div></div>
+      <div class="gi reveal"><img src="gallery5.jpg" alt="Diamond Cut Gold Set" loading="lazy" style="width:100%;height:100%;object-fit:cover"/><span class="gtag">Diamond Cut</span><div class="gcap"><h3>Diamond-Cut Set</h3><p>Yellow Gold &middot; Top &amp; Bottom</p></div></div>
+      <div class="gi reveal"><img src="gallery6.jpg" alt="Baroque Filigree Full Set" loading="lazy" style="width:100%;height:100%;object-fit:cover"/><span class="gtag">Classic</span><div class="gcap"><h3>Baroque Filigree</h3><p>Full Mouth &middot; Silver</p></div></div>
+      <div class="gi reveal"><img src="gallery7.jpg" alt="Rose Gold Nugget Set Worn" loading="lazy" style="width:100%;height:100%;object-fit:cover"/><span class="gtag">Rose Gold</span><div class="gcap"><h3>Nugget Set</h3><p>Rose Gold &middot; Top &amp; Bottom</p></div></div>
     </div>
   </div>
 </section>
@@ -267,10 +267,10 @@
       <div class="fc reveal"><div class="fc-icon">&#9881;</div><h3>Precision Fit</h3><p>Every piece is built from your personal impressions. No guesswork &mdash; just a flawless, comfortable fit that stays put.</p></div>
       <div class="fc reveal"><div class="fc-icon">&#9670;</div><h3>One-Off Designs</h3><p>Nothing gets duplicated. Each set is a singular piece designed around you &mdash; your aesthetic, your identity, your statement.</p></div>
       <div class="fc reveal"><div class="fc-icon">&#9675;</div><h3>Obsessive Detail</h3><p>From stone selection to finish polish, every millimeter receives the same obsessive attention. Mediocrity isn&rsquo;t an option.</p></div>
-      <div class="fc reveal"><div class="fc-icon">&#9677;</div><h3>LA Rooted</h3><p>Based in Los Angeles. Shaped by the culture, the music, the streets. Molten Vice is a creative studio first, grillz second.</p></div>
+      <div class="fc reveal"><div class="fc-icon">&#9677;</div><h3>LA Rooted</h3><p>Based in Los Angeles — but built on a New York foundation. The eye for craft came from NYC. The freedom to run with it came from LA.</p></div>
     </div>
     <div class="bstory">
-      <div class="bsv reveal">MV</div>
+      <div class="bsv reveal" style="font-size:0"><img src="https://images.unsplash.com/photo-1589987607627-616cca389aed?w=700&q=80" alt="Molten Vice Studio" style="width:100%;height:100%;object-fit:cover"/></div>
       <div class="bst reveal">
         <div class="origin">&#128505; New York City &nbsp;&rarr;&nbsp; &#127804; Los Angeles</div>
         <h2>&ldquo;The piece should feel like armor the moment you put it on.&rdquo;</h2>
